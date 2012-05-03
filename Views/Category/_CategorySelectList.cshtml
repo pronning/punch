@@ -1,0 +1,35 @@
+﻿@using Punch.Models
+@model List<CategoryModel>           
+
+ 
+<div class="list">
+@{
+    foreach (var item in Model)
+    {
+        <div class="category @(item.Id.Equals(ViewBag.CurrentExpenseCategory.Id) ? "selected" : "")">   
+            @Ajax.ActionLink(item.Value,
+                                                                   "SetCategory",
+                                                                   "Category",
+                                                                   new
+                                                                       {
+                                                                           target = ViewBag.CurrentExpenseId,
+                                                                           categoryId = item.Id,
+                                                                           saveChanges = ViewBag.SaveChanges
+                                                                       },
+                                                                   new AjaxOptions
+                                                                   {
+                                                                       UpdateTargetId = "devnull",
+                                                                       OnComplete = string.Format("mock('cat{0}','{1}')", ViewBag.CurrentExpenseId, item.Value)
+                                                                   },
+                                                                   new { })
+
+                
+        </div>
+    }
+    <div class="addcategory">
+        @Html.ActionLink("Legg til ny", "InsertItemAndSetExpense", new {callerid = ViewBag.CurrentExpenseId})
+    </div>
+}
+</div>
+
+

@@ -1,0 +1,54 @@
+﻿@model Punch.Models.ExpenseModel
+
+<h2>Endre</h2>
+
+@using (Html.BeginForm("Edit", "List", FormMethod.Post))
+{
+        @Html.HiddenFor(model => model.Id)        
+    <div class="row emp">   
+    <label for="amount">Beløp</label>
+        @Html.ValidationMessageFor(model => model.Amount)
+        @Html.TextBoxFor(model => model.Amount)        
+    </div>
+     <div class="row">
+        <label for="date">Dato</label>
+        @Html.ValidationMessageFor(model => model.Date)
+        @Html.EditorFor(model => model.Date, new { id = "datepicker" })        
+    </div>
+    <div class="row">
+        <label for="desc">Beskrivelse</label>
+        @Html.ValidationMessageFor(model => model.Description)
+        @Html.TextBoxFor(model => model.Description)        
+    </div>
+    <div class="row">
+        <label>Kategori</label>
+        @Model.Category
+      @*  @Html.EditorFor(model => model.Category, new { expenseId = Model.Id })*@
+    <div id="CategorySelector" class="shadowBox">Laster...</div>
+    </div>
+    <div class="row">
+        <label for="means">Betalt med</label>
+        @Html.ValidationMessageFor(model => model.Means)
+        @Html.TextBoxFor(model => model.Means)        
+    </div>
+    <div class="row">
+        <label for="owner">Betalt av</label>
+        <div class="radiogroup">
+            <span>@Html.RadioButtonFor(m => m.Owner, "Paal") Pål</span>
+            <span>@Html.RadioButtonFor(m => m.Owner, "Helene") Helene</span>       
+        </div>
+    </div>
+    <div class="row">
+        <label for="iscommon">Felles</label>
+        <div class="radiogroup">
+            <span>
+                @Html.CheckBoxFor(model => model.IsCommon)
+             </span>
+        </div>
+    </div>
+     <div class="action">        
+        @Html.ActionLink("Avbryt", "Cancel")
+        <input type="submit" value="Lagre" />
+    </div>
+}
+

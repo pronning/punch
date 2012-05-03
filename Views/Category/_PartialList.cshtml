@@ -1,0 +1,30 @@
+﻿<table id="categorytable">
+	<thead>
+        <tr>
+            <th>Kategori</th>
+            <th>Filtre</th>        
+            <th></th>
+            <th></th>        
+        </tr>
+	</thead>
+	<tbody>
+
+    @foreach (var item in Model) {      
+    
+        <tr>
+            <td>@item.Category.Value</td>
+            <td>@item.Category.Filter</td>
+            <td>@Html.ActionLink("endre", "EditItem", new { id = item.Category.Id })</td>
+            <td>@if( item.HasDependencies)
+                {
+                    @Html.ActionLink("se utgifter med denne kategorien", "ConfirmDelete", new { id = item.Category.Id }, new { title = "se avhengigheter." });
+                }
+                else
+                {
+                    @Html.ActionLink("slett", "DeleteItem", new { id = item.Category.Id }, new { title = "slett.", @class = "del" });
+                }
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

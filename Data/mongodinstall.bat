@@ -1,0 +1,1 @@
+mongod --logpath e:\mongodb\logs --logappend --dbpath e:\mongodb\data --directoryperdb --install

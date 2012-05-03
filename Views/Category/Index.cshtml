@@ -1,0 +1,16 @@
+﻿@model IEnumerable<Punch.Models.CategoryViewModel>
+@{
+    ViewBag.Title = "Kategorier";
+}
+
+<h2>Kategorier</h2>
+
+<div class="action">
+    @Html.ActionLink("Legg til ny", "InsertItem")
+</div>
+<div id="list">   
+    @{ Html.RenderPartial("_PartialList", Model); }
+</div>
+<div class="action">
+    @Html.ActionLink("Tilbake til liste", "Back")
+</div>

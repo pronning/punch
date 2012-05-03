@@ -1,0 +1,59 @@
+@using Punch.Data;
+@using Punch.Utils;
+@model IEnumerable<Punch.Models.ExpenseModel>
+           
+
+<div id="yearselector">
+
+@Html.YearLinks(Model)
+<div id="sum">@ViewBag.Sum/</div>
+</div>
+    <table id="expensetable">
+	<thead>
+        <tr>
+            <th>Dato</th>
+            <th>Beskrivelse</th>        
+            <th class="currency ">Beløp</th>
+            @*<th>Betalt med</th>*@
+            <th>Slette</th>
+            <th>Felles?</th>
+            <th>Kategori</th>
+        
+        </tr>
+	</thead>
+	<tbody>
+
+    @foreach (var item in Model) {
+        
+    
+        <tr class="@item.Date.Year @(item.IsCommon ? "" : "pers")">
+            <td>@item.Date.ToShortDateString()</td>
+            <td class="desc">
+                <div>
+                    @Html.ActionLink((string)item.Description ?? "[utgift]", "Edit", new { id = item.Id.ToString() })</div><p></p></td>
+            <td class="currency">@item.Amount.ToString("C")</td>            
+            <td>
+
+                @Ajax.ActionLink( "slett",
+                         "DeleteItem",
+                         new { id = item.Id.ToString() },
+                         new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "expensetable", OnSuccess = "bindConfirmationToDeleteLinks" },
+                         new { title = "slett.", @class = "del" } )
+                     
+            </td>
+            <td>
+                @Ajax.ActionLink( (item.IsCommon ? "felles" : "mitt"),
+                            "ToggleItem",
+                            new { id = item.Id.ToString() },
+                         new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "expensetable", OnSuccess = "bindConfirmationToDeleteLinks" },
+                            new { @class = "switch" } )
+            </td>   
+            <td>
+                   @Html.EditorFor(model => item.Category, new { expenseId = item.Id })
+            </td>         
+        </tr>
+       
+     }
+	</tbody>
+    </table>
+    <div id="CategorySelector" class="shadowBox">Laster...</div>

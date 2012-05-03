@@ -1,0 +1,21 @@
+﻿@using Punch.Models
+@inherits WebViewPage<CategoryModel>
+ 
+@{
+    var expenseId = ViewData["expenseId"];
+    if( expenseId == null)
+    {
+        throw new NullReferenceException("du må sette hvilken expense kategorien skal settes for");
+    }
+
+    bool saveChanges = ViewData.ContainsKey("saveChanges") && (bool) ViewData["saveChanges"];
+    
+    var category = Model ?? new CategoryModel {Value = "velg..."};
+    
+    @Ajax.ActionLink(category.Value,
+                           "ChangeCategory",
+                           "Category",
+                           new {expenseId, saveChanges},
+                           new AjaxOptions {HttpMethod = "Get", UpdateTargetId = "CategorySelector", OnBegin = string.Format("prepare('cat{0}')", expenseId)},
+                           new {id = "cat" + expenseId})
+}

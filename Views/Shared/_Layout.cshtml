@@ -1,0 +1,30 @@
+@helper Database() {
+    @Punch.Data.ConnectionStrings.DataBaseName;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Punch > @ViewBag.Title</title>
+    <link href="@Url.Content("~/Content/Framework.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/jquery-1.4.4.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/custom.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery-ui-1.8.14.custom.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.tablesorter.min.js")" type="text/javascript"></script>
+</head>
+
+<body>
+    <div class="page @string.Concat(User.Identity.Name, "page")">       
+        <div class="ident @User.Identity.Name">@Html.ActionLink(string.Concat("Punch! for ", User.Identity.Name.ToLower()), "Index", "Home")</div>
+            @{ Html.RenderPartial("_PartialActions"); }
+        <div id="main">
+            @RenderBody()           
+        </div>
+        <div id="footer">            
+            <p>@DateTime.Now.ToLongDateString() kl. @DateTime.Now.ToShortTimeString() | DB: @Database() </p>
+        </div>
+    </div>
+    <div id="devnull"></div>
+</body>
+</html>

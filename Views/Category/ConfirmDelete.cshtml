@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Punch.Models.ExpenseModel>
+           
+<h2>Bekreft sletting</h2>
+
+<div class="alert">Kategorien "@ViewBag.Category.Value" er brukt på følgende utgift@(Model.Count() > 1 ? "er" : ""):</div>
+@*@Ajax.ActionLink("Endre kategori på alle til...",
+                    "ChangeCategoryForAll",
+                    "Category",
+                    new { fromId = ViewBag.Category.Id },
+                    new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "CategorySelector", OnBegin = "prepare('catall')" },
+                    new { id = "catall" })*@
+
+ <table id="expensetable">
+	<thead>
+        <tr>
+            <th>Dato</th>
+            <th>Beskrivelse</th>        
+            <th class="currency ">Beløp</th>
+            <th>Betalt med</th>
+            <th>Felles?</th>
+            <th></th>
+        
+        </tr>
+	</thead>
+	<tbody>
+
+    @foreach (var item in Model) {        
+    
+        <tr>
+            <td class="first">@item.Date.ToShortDateString()</td>
+            <td>@((string)item.Description ?? "[utgift]")</td>
+            <td class="currency">@item.Amount.ToString("C")</td>
+            <td>@item.Means</td>
+            <td class="center">@( (item.IsCommon ? "felles" : "mitt"))</td>
+            <td class="center">
+                @Ajax.ActionLink((string)( item.Category != null ? item.Category.Value : "[velg...]"),
+                    "ChangeCategory",
+                    "Category",
+                    new { id = item.Id },
+                    new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "CategorySelector", OnBegin = string.Format("prepare('cat{0}')", item.Id) },
+                    new { id = "cat" + item.Id })
+            </td>
+        </tr>
+    }
+	</tbody>
+    </table>
+    
+    <div id="CategorySelector" class="shadowBox">Laster...</div>
+

@@ -1,0 +1,48 @@
+﻿@model Punch.Models.ExpenseModel
+@using Punch.Controllers           
+
+<h2>Legg til</h2>
+
+@using (Html.BeginForm("Insert", "List"))
+{
+    <div class="row emp">
+        <label for="amount">Beløp</label>
+        @Html.ValidationMessageFor(model => model.Amount)
+        @Html.TextBoxFor(model => model.Amount)        
+    </div>
+     <div class="row">
+        <label for="date">Dato</label>
+        @Html.ValidationMessageFor(model => model.Date)
+        @Html.EditorFor(model => model.Date, new { id = "datepicker" })        
+    </div>
+    <div class="row">
+        <label for="desc">Beskrivelse</label>
+        @Html.ValidationMessageFor(model => model.Description)
+        @Html.TextBoxFor(model => model.Description)        
+    </div>
+    <div class="row">
+        <label for="means">Betalt med</label>
+        @Html.ValidationMessageFor(model => model.Means)
+        @Html.TextBoxFor(model => model.Means)        
+    </div>
+    <div class="row">
+        <label for="owner">Betalt av</label>
+        <div class="radiogroup">
+            <span>@Html.RadioButtonFor(m => m.Owner, "Paal") Pål</span>
+            <span>@Html.RadioButtonFor(m => m.Owner, "Helene") Helene</span>       
+        </div>
+    </div>
+    <div class="row">
+        <label for="iscommon">Felles</label>
+        <div class="radiogroup">
+            <span>
+                @Html.CheckBoxFor(model => model.IsCommon)
+             </span>
+        </div>
+    </div>
+     <div class="action">        
+        @Html.ActionLink("Avbryt", "Cancel")
+        <input type="submit" value="Lagre" />
+    </div>
+}
+

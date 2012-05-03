@@ -1,0 +1,14 @@
+﻿@using Punch.Models
+@model DebugModel
+@{
+    ViewBag.Title = "Import";
+}
+
+<h2>Import</h2>
+
+<ul>
+@foreach (var message in Model.Messages)
+{
+    <li> @message </li>
+    
+}</ul>

@@ -1,0 +1,39 @@
+﻿@using Punch.Data
+@using Punch.Models
+
+<table id="stattable" width="100%">
+	<thead>
+        <tr>
+            <th class="category">Kategori</th>
+            <th>@Const.Paal</th>        
+            <th>@Const.Helene</th>
+            <th>Sum</th>
+        </tr>
+    </thead>
+    <tbody>
+@{
+    var categories = CategoryDataManager.GetCategories();
+    var paalexpenses = ExpenseDataManager.GetExpenses(Const.Paal).Where(exp => exp.Category != null );
+    var heleneexpenses = ExpenseDataManager.GetExpenses(Const.Helene).Where(exp => exp.Category != null );
+    
+       
+    foreach (var item in categories)
+    {
+        var paalselection = paalexpenses.Where( exp => exp.Category.Id == @item.Id).ToList() ?? new List<ExpenseModel>();
+        var paalsum = @paalselection.Select(exp => exp.Amount).Sum();
+        
+        var heleneselection = heleneexpenses.Where(exp => exp.Category.Id == @item.Id).ToList() ?? new List<ExpenseModel>();
+        var helenesum = heleneselection.Select(exp => exp.Amount).Sum();
+        <tr>
+            <td class="category">@item.Value</td>
+            <td>@paalsum.ToString("C")</td>
+            <td>@helenesum.ToString("C")</td>
+            <td>@((@helenesum + @paalsum).ToString("C"))</td>
+        </tr>
+        
+    }
+}
+    </tbody>
+</table>
+
+    

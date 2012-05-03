@@ -1,0 +1,26 @@
+﻿@model Punch.Models.CategoryModel
+
+<h2>Legg til kategori</h2>
+
+@using (Html.BeginForm("InsertItem", "Category"))
+{
+    <div class="row emp">
+        <label for="amount">Kategori</label>
+        @Html.ValidationMessageFor(model => model.Value)
+        @Html.TextBoxFor(model => model.Value)        
+    </div>
+     <div class="row">
+        <label for="date">Filter</label>
+        @Html.ValidationMessageFor(model => model.Filter)
+        @Html.EditorFor(model => model.Filter)
+    </div>
+    <div class="row">
+        <label>Er vanligvis felles</label>
+        @Html.CheckBoxFor(model => model.DefaultCommon)    
+    </div>
+     <div class="action">        
+        @Html.ActionLink("Avbryt", "Cancel")
+        <input type="submit" value="Lagre" />
+    </div>
+}
+

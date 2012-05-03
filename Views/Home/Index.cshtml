@@ -1,0 +1,21 @@
+﻿@using Punch.Models
+@model IEnumerable<ExpenseModel>
+<div class="entry">
+    <div class="flyt">
+        <span class="massive p">
+                @Html.ActionLink("p", "Enter", new { user = Const.Paal })
+        </span>
+        <span class="balance p">@ViewBag.PaalSum</span>
+    </div>
+    <div class="flyt">
+        <span class="massive h">
+                @Html.ActionLink("h", "Enter", new { user = Const.Helene })
+        </span>
+        <span class="balance h">@ViewBag.HeleneSum</span>
+    </div>
+    <span class="balance">@ViewBag.Balance</span>
+</div>
+@{ Html.RenderPartial("_Stats"); }
+
+@* @Html.ActionLink("Import", "Import", new { user = string.Empty })*@
+

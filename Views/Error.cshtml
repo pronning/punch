@@ -1,0 +1,18 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "Ikkjee braaa";
+}
+
+<h2>En av oss gjorde noe dumt.</h2>
+
+@if (Model != null)
+{
+    <h3>@Model.Exception.GetType().Name</h3>
+    <pre>
+        @Model.Exception.ToString()
+    </pre>
+    <p>
+        thrown in @Model.ControllerName @Model.ActionName</p>
+    </p>
+}
